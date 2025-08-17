@@ -22,6 +22,7 @@ M.is_supported = function(lang)
 end
 
 local buffer_tag = {}
+local autocmd = {}
 
 local setup_ts_tag = function()
     local bufnr = vim.api.nvim_get_current_buf()
@@ -497,7 +498,7 @@ M.attach = function(bufnr)
             })
         end
         if Setup.get_opts(vim.bo.filetype).enable_rename then
-            vim.api.nvim_create_autocmd("InsertLeave", {
+            autocmd[bufnr] = vim.api.nvim_create_autocmd("InsertLeave", {
                 group = group,
                 buffer = bufnr,
                 callback = M.rename_tag,
@@ -509,6 +510,12 @@ end
 M.detach = function(bufnr)
     bufnr = tonumber(bufnr) or vim.api.nvim_get_current_buf()
     buffer_tag[bufnr] = nil
+    pcall(vim.keymap.del, "i", ">", { buffer = bufnr })
+    pcall(vim.keymap.del, "i", "/", { buffer = bufnr })
+    if autocmd[bufnr] then
+        pcall(vim.api.nvim_del_autocmd, autocmd[bufnr])
+        autocmd[bufnr] = nil
+    end
 end
 
 -- _G.AUTO = M
