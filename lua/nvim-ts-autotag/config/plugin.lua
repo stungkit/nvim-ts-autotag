@@ -144,6 +144,7 @@ local Setup = {
         ["eruby"] = "html",
         ["liquid"] = "html",
         ["vue"] = "html",
+        ["vento"] = "html",
         ["htmlangular"] = "html",
         ["htmldjango"] = "html",
         ["markdown"] = "html",

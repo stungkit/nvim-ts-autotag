@@ -12,6 +12,7 @@ It works with:
 - javascript
 - jsx
 - liquid
+- vento
 - markdown
 - php
 - rescript
